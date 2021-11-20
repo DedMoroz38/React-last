@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import img from '../../images/send.svg';
+import { useRef } from 'react';
 import { chatsConnect } from '../../connect/chats/index.js';
 import { useDispatch } from "react-redux";
 import { nanoid } from 'nanoid';
@@ -8,6 +9,7 @@ import { MessagesListPresentational } from './messagesList';
 let NewMessage = '';
 const AuthorName = 'Author';
 export const MessagesList = ({ chats, addMessage, messages }) => {
+    const inputEl = useRef(null);
     const { chatId } = useParams();
     // const post = chats.chats.find(chat => chat.id === chatId);
     let messageList = [];
@@ -23,9 +25,13 @@ export const MessagesList = ({ chats, addMessage, messages }) => {
         if (NewMessage.length !== 0) {
             const a = addMessageWithThunk(chatId, NewMessage, AuthorName);
             dispatch(a);
+            NewMessage = '';
         }
     }
-
+    const inputUpdate = () => {
+        inputEl.current.value = '';
+        inputEl.current.focus();
+    }
 
 
 
@@ -49,6 +55,8 @@ export const MessagesList = ({ chats, addMessage, messages }) => {
             AddMessage={AddMessage}
             img={img}
             messageList={messageList}
+            ref={inputEl}
+            inputUpdate={inputUpdate}
         />
     );
 }

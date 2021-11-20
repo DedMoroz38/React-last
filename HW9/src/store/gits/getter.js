@@ -14,7 +14,6 @@ export const getAllGists = (link) => async (dispatch) => {
         dispatch(getGistsSuccess(result));
     }
     catch (err) {
-        console.log(err.message);
         dispatch(getGistsFailure(err.message));
     }
 };

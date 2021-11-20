@@ -8,9 +8,11 @@ export const STATUSES = {
 }
 
 const initialState = {
-    gists: [],
     request: STATUSES.IDLE,
-    error: null,
+    error: false,
+    error_message: '',
+    loading: false,
+    articles: {}
 };
 
 export const gistsReducer = (state = initialState, action) => {
@@ -19,18 +21,23 @@ export const gistsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 request: STATUSES.REQUEST,
+                error: false,
+                loading: true,
             };
         case GET_GISTS_SUCCESS:
             return {
                 ...state,
                 articles: action.payload,
                 request: STATUSES.SUCCESS,
+                loading: false,
             };
         case GET_GISTS_FAILURE:
             return {
                 ...state,
                 request: STATUSES.FAILURE,
-                error: action.payload,
+                error_message: action.payload,
+                error: true,
+                loading: false,
             };
         default:
             return state;

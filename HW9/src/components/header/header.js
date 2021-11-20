@@ -26,8 +26,6 @@ export default function Header() {
                 <div className="header-box">
                     {navigation.map((elem) => (
                         <NavLink
-                            className='nav-links'
-                            activeClassName='active-nav-link'
                             key={elem.id}
                             className='nav'
                             to={elem.path}>{elem.title}

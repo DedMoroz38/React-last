@@ -2,8 +2,9 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { chatsReducer, messageReducer } from './chats';
 import thunk from 'redux-thunk';
 import storage from 'redux-persist/lib/storage';
-import { gistsReducer } from './gits/reducer'
-import { persistStore, persistReducer } from 'redux-persist'
+import { gistsReducer } from './gits/reducer';
+import { persistStore, persistReducer } from 'redux-persist';
+import { Reducer } from './profile/reducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     chats: chatsReducer,
     messages: messageReducer,
     gists: gistsReducer,
+    profile: Reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

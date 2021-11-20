@@ -1,6 +1,6 @@
 import './App.css';
 import { Messager } from './routes/messanger';
-import { Profile } from './routes/profile';
+import Profile from './routes/profile';
 import { GistsList } from './routes/gits2'
 import { Routes, Route } from 'react-router-dom';
 

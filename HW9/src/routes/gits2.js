@@ -1,8 +1,8 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect } from 'react';
 import { CircularProgress } from '@mui/material';
 import Header from '../components/header/header';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectGists, selectGistsError, selectGistsLoading, selectGistsData } from '../store/gits/selectors'
+import { selectGistsError, selectGistsLoading, selectGistsData } from '../store/gits/selectors'
 import { getAllGists } from '../store/gits/getter';
 
 import * as React from 'react';
@@ -37,19 +37,26 @@ export const GistsList = () => {
     }, []);
 
     if (loading) {
-        return <CircularProgress />;
+        return (
+            <div className='top'>
+                <Header />
+                <div className='container-progres'>
+                    <CircularProgress />
+                </div>
+            </div>
+        )
     }
-
-    // if (error) {
-    //     console.log(error);
-    //     return (
-    //         <>
-    //             <Header />
-    //             <h3>Error</h3>
-    //             <button onClick={requestGists}>Retry</button>
-    //         </>
-    //     );
-    // }
+    if (error) {
+        return (
+            <div className='top'>
+                <Header />
+                <div className='container-progres'>
+                    <h3>Error: {error}</h3>
+                    <button onClick={requestGists}>Retry</button>
+                </div>
+            </div>
+        );
+    }
     return <div className="top">
         <Header />
         <div className="gits-container">

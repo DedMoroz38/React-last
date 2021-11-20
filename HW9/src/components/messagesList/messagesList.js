@@ -1,4 +1,14 @@
+import { useRef } from 'react';
+
+
 export const MessagesListPresentational = (props) => {
+    const inputEl = useRef(null);
+
+    const inputUpdate = () => {
+        inputEl.current.value = '';
+        inputEl.current.focus();
+        props.AddMessage();
+    }
     return (
         <div className='message-box'>
             <div className='message-name'>
@@ -14,14 +24,17 @@ export const MessagesListPresentational = (props) => {
             </div>
             <div className='message-send'>
                 <input
+                    ref={inputEl}
                     autoFocus
                     placeholder='Сообщение...'
                     onChange={props.NewMessageFc}
+                    type="text"
                 ></input>
-                <button onClick={props.AddMessage}>
+                <button onClick={inputUpdate}>
                     <img src={props.img} alt='send' />
                 </button>
             </div>
         </div>
     );
 }
+
