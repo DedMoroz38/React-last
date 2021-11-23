@@ -7,6 +7,7 @@ export const getAllGists = (link) => async (dispatch) => {
 
     try {
         const res = await fetch(`${API_URL_PUBLIC}${link}`);
+        console.log(res);
         if (!res.ok) {
             throw new Error(`Request failed with status ${res.status}`);
         }

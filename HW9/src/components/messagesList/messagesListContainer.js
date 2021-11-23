@@ -5,10 +5,12 @@ import { chatsConnect } from '../../connect/chats/index.js';
 import { useDispatch } from "react-redux";
 import { nanoid } from 'nanoid';
 import { MessagesListPresentational } from './messagesList';
+import firebase from "firebase";
 
 let NewMessage = '';
 const AuthorName = 'Author';
 export const MessagesList = ({ chats, addMessage, messages }) => {
+    const db = firebase.database();
     const inputEl = useRef(null);
     const { chatId } = useParams();
     // const post = chats.chats.find(chat => chat.id === chatId);
@@ -39,10 +41,14 @@ export const MessagesList = ({ chats, addMessage, messages }) => {
 
     function addMessageWithThunk(chatId, message, authorName) {
         return dispatch => {
-            addMessage(chatId, { authorName: authorName, message: message, key: nanoid() });
+            const id = nanoid();
+            addMessage(chatId, { authorName: authorName, message: message, key: id });
+            const dbObj = { authorName: authorName, message: message, key: id }
+            db.ref("messages").child(chatId).push(dbObj);
             const botMessage = 'Hi!';
             const botName = 'Bot';
-            setTimeout(() => addMessage(chatId, { authorName: botName, message: botMessage, key: nanoid() }), 2000);
+            const botId = nanoid();
+            setTimeout(() => addMessage(chatId, { authorName: botName, message: botMessage, key: botId }), 2000);
         }
     }
 

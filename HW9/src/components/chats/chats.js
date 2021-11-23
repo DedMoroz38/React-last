@@ -1,10 +1,12 @@
 import { chatsConnect } from '../../connect/chats/index.js';
 import img from '../../images/trash.svg';
 import { NavLink } from 'react-router-dom';
+import { nanoid } from 'nanoid';
+import firebase from 'firebase';
 
 let NewMessage = '';
 function Chats({ chats, addChat, removeChat }) {
-
+    const db = firebase.database();
     const ChatName = (event) => {
         NewMessage = event.target.value;
     };
@@ -15,8 +17,11 @@ function Chats({ chats, addChat, removeChat }) {
         } else {
             const NewChat = {
                 name: NewMessage,
+                id: nanoid()
             }
             addChat(NewChat);
+            const id = nanoid();
+            db.ref("chats").child(id).push(NewChat);
         }
     };
 
