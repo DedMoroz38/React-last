@@ -18,6 +18,21 @@ export default function Header() {
             id: 2,
             path: '/gits',
             title: 'Gits'
+        },
+        {
+            id: 3,
+            path: '/signup',
+            title: 'Registration'
+        },
+        {
+            id: 4,
+            path: '/login',
+            title: 'Login'
+        },
+        {
+            id: 5,
+            path: '/new',
+            title: 'NEW'
         }
     ];
     return (
