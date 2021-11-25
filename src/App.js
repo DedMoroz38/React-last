@@ -8,7 +8,6 @@ import { Login } from './routes/login';
 import PrivateRoute from './hocs/PrivateRoute';
 import firebase from 'firebase';
 import { useState, useEffect } from 'react';
-import MessageFieldContainer from './components/messagesList/new.js'
 
 function App() {
   const [authed, setAuthed] = useState(false);
@@ -28,7 +27,6 @@ function App() {
       <Route path="/gits" element={<GistsList />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="/new" element={<MessageFieldContainer />} />
       <Route path="/profile" element={
         <PrivateRoute authorization={authed}>
           <Profile />

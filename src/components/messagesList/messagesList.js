@@ -1,9 +1,7 @@
 import { useRef } from 'react';
-import firebase from 'firebase';
 
 
 export const MessagesListPresentational = (props) => {
-    const db = firebase.database();
     const inputEl = useRef(null);
 
     const inputUpdate = () => {

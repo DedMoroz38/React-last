@@ -29,11 +29,6 @@ export default function Header() {
             path: '/login',
             title: 'Login'
         },
-        {
-            id: 5,
-            path: '/new',
-            title: 'NEW'
-        }
     ];
     return (
         <div className='header'>

@@ -1,7 +1,5 @@
 import { CREATE_CHAT, REMOVE_CHAT, ADD_MESSAGE } from "./actions";
-import { nanoid } from "nanoid";
 import firebase from "firebase";
-// import firebase from "firebase";
 
 const config = ({
     apiKey: "AIzaSyA9jR5nfhJ2vvdJGZp4C8D7mZTC6YJIII8",
@@ -20,27 +18,24 @@ const db = firebase.database();
 const dbChats = [];
 db.ref("chats").on("value", (snapshot) => {
     snapshot.forEach((snap) => {
-        console.log(snap.val());
         const key = Object.keys(snap.val())
-        console.log(key);
         dbChats.push(snap.val()[`${key[0]}`]);
     });
 });
 
-const dbMessages = [];
-db.ref("messages").on("value", (snapshot) => {
-    snapshot.forEach((snap) => {
-        const key = Object.keys(snap.val())
-        console.log(key);
-        console.log(snap.val());
-    });
+const dbMessages = {};
+db.ref("messages").on("value", (snap) => {
+    for (let elem in snap.val()) {
+        dbMessages[`${elem}`] = [];
+        for (let cont in snap.val()[elem]) {
+            dbMessages[`${elem}`].push(snap.val()[elem][cont]);
+        }
+    }
 });
 
 
 const inintialMessageState = {
-    messages: {
-
-    },
+    messages: dbMessages,
 }
 
 const initialState = {
@@ -56,7 +51,7 @@ export const chatsReducer = (state = initialState, action) => {
                 chats: [
                     ...state.chats,
                     {
-                        id: nanoid(),
+                        id: action.payload.id,
                         name: action.payload.name,
                     }
                 ],
@@ -80,7 +75,7 @@ export const messageReducer = (state = inintialMessageState, action) => {
             const { chatId, obj } = action.payload;
             const newMessages = { ...state.messages };
             newMessages[chatId] = [...(newMessages[chatId] || []), obj]
-            console.log(newMessages);
+            console.log(state.messages);
             return {
                 messages: newMessages
             }

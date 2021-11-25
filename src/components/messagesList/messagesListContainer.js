@@ -42,13 +42,17 @@ export const MessagesList = ({ chats, addMessage, messages }) => {
     function addMessageWithThunk(chatId, message, authorName) {
         return dispatch => {
             const id = nanoid();
-            addMessage(chatId, { authorName: authorName, message: message, key: id });
-            const dbObj = { authorName: authorName, message: message, key: id }
+            const dbObj = { authorName: authorName, message: message, key: id };
+            addMessage(chatId, dbObj);
             db.ref("messages").child(chatId).push(dbObj);
             const botMessage = 'Hi!';
             const botName = 'Bot';
             const botId = nanoid();
-            setTimeout(() => addMessage(chatId, { authorName: botName, message: botMessage, key: botId }), 2000);
+            const botObj = { authorName: botName, message: botMessage, key: botId };
+            setTimeout(() => {
+                addMessage(chatId, botObj)
+                db.ref("messages").child(chatId).push(botObj)
+            }, 2000);
         }
     }
 
@@ -67,3 +71,4 @@ export const MessagesList = ({ chats, addMessage, messages }) => {
     );
 }
 export const Messages = chatsConnect(MessagesList)
+
